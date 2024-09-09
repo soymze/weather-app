@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+// App.js
+import React, { useContext } from 'react';
+import WeatherContext from './components/weatherContext';
+import CitySelector from './components/CitySelector';
 import './App.css';
 
-function App() {
+const App = () => {
+  const { weatherData } = useContext(WeatherContext);
+
+  if (!weatherData) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='weather-card'>
+      <h1>Weather Data</h1>
+      <CitySelector />
+      <p>Temperature: {weatherData.main.temp} °C</p>
+      <p>Feels Like: {weatherData.main.feels_like} °C</p>
+      <p>Weather: {weatherData.weather[0].description}</p>
+      <p>Humidity: {weatherData.main.humidity}%</p>
+      <p>Wind Speed: {weatherData.wind.speed} m/s</p>
     </div>
   );
-}
+};
 
 export default App;
